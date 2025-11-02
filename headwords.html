@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本提取工具</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: sans-serif;
+            display: flex; /* 使用flexbox布局 */
+            flex-direction: column; /* 让body内的内容垂直排列 */
+        }
+
+        .container {
+            display: flex; /* 让容器内的两个文本框水平排列 */
+            flex: 1; /* 让容器填充剩余空间 */
+            padding: 10px;
+            gap: 10px; /* 两个文本框之间的间距 */
+        }
+
+        textarea {
+            flex: 1; /* 让两个文本框平分空间 */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: none; /* 禁止用户调整文本框大小 */
+            box-sizing: border-box; /* 边框和内边距包含在元素的总宽度和高度内 */
+            line-height: 1.5; /* 增加行高，改善可读性 */
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>文本内容提取器</h1>
+    <div class="container">
+        <textarea id="inputText" placeholder="请在这里输入文本，每四行为一组数据..."></textarea>
+        <textarea id="outputText" placeholder="提取结果将显示在这里..." readonly></textarea>
+    </div>
+
+    <script>
+        const inputTextarea = document.getElementById('inputText');
+        const outputTextarea = document.getElementById('outputText');
+
+        inputTextarea.addEventListener('input', function() {
+            const inputContent = inputTextarea.value;
+            const lines = inputContent.split('\n');
+            const extractedData = [];
+
+            for (let i = 0; i < lines.length; i += 4) {
+                if (lines[i] !== undefined && lines[i].trim() !== '') {
+                    extractedData.push(lines[i]);
+                }
+            }
+            outputTextarea.value = extractedData.join('\n');
+        });
+    </script>
+</body>
+</html>
